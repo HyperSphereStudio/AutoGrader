@@ -2,6 +2,11 @@
 
 To use: Create root directory and create main.c, CMakeLists.txt, and two directories (one to hold the c files, one to hold the grading files)
 
+Required programs:
+    CMake
+    Java
+    Make (Probaly comes with CMake)
+
 For instance
 
 root
