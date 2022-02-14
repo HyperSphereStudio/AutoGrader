@@ -41,7 +41,6 @@ public class Code{
     }
 
     public static class Function{
-        public String name;
         public Declarator declaration;
 
         public String toString(){
@@ -136,7 +135,7 @@ public class Code{
             return v;
         }
     }
-    
+
 
 
 }
