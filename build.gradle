@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'antlr'
 }
 
 repositories {
@@ -9,12 +10,45 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments += ["-visitor"]
+    outputDirectory = "${buildDir}/generated-src/antlr/main/com.hypersphere/Parse" as File
+}
+
 jar {
     manifest {
-        attributes 'Main-Class': 'com.hypersphere.Main'
+        attributes(
+                'Main-Class': 'com.hypersphere.AutoGrader',
+        )
     }
 }
 
-dependencies {
+task fatJar(type: Jar) {
+    manifest.from jar.manifest
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+    with jar
+}
 
+dependencies {
+    implementation fileTree(dir: 'lib', include: '*.jar')
+
+    implementation "com.fifesoft:rsyntaxtextarea:3.1.6"
+    implementation "com.fifesoft:rstaui:3.1.4"
+    implementation "com.fifesoft:languagesupport:3.1.4"
+    implementation "com.fifesoft:spellchecker:3.1.4"
+
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.1'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+
+
+    antlr "org.antlr:antlr4:4.9.3"
+    implementation 'org.antlr:antlr4-runtime:4.9.3'
 }

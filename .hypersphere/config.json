@@ -1,0 +1,8 @@
+{
+  "showDesc" : true,
+  "paramAssistance" : true,
+  "alternateRowColors" : true,
+  "autoComplete" : true,
+  "screenWidth" : 500,
+  "screenHeight" : 500
+}
