@@ -28,6 +28,7 @@ public class Utils {
     public static String joins(List l){
         return join(" ", l);
     }
+
     public static String joins(Object... array){
         return join(" ", array);
     }

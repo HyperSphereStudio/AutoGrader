@@ -151,6 +151,9 @@ com/hypersphere/IDE/CNTRL/IDEListener.java
  com.hypersphere.IDE.CNTRL.IDEListener
 com/hypersphere/AutoGrader.java
  com.hypersphere.AutoGrader
+com/hypersphere/Analysis/IntVector.java
+ com.hypersphere.Analysis.IntVector
+ com.hypersphere.Analysis.IntVector$DFunction
 com/hypersphere/IDE/CNTRL/IDE.java
  com.hypersphere.IDE.CNTRL.IDE
 com/hypersphere/Utils.java
@@ -167,14 +170,26 @@ com/hypersphere/IDE/UI/IDETextArea.java
 com/hypersphere/Plagairism/Plagairism.java
  com.hypersphere.Plagairism.Plagairism
 com/hypersphere/Analysis/Code.java
+ com.hypersphere.Analysis.AbstractCodeObject
  com.hypersphere.Analysis.Code
- com.hypersphere.Analysis.Code$1
- com.hypersphere.Analysis.Code$Declarator
- com.hypersphere.Analysis.Code$DeclaratorV
- com.hypersphere.Analysis.Code$Function
- com.hypersphere.Analysis.Code$FunctionV
- com.hypersphere.Analysis.Code$ParameterDeclarationV
- com.hypersphere.Analysis.Code$ParameterTypeList
- com.hypersphere.Analysis.Code$ParameterTypeListV
- com.hypersphere.Analysis.Code$Type
- com.hypersphere.Analysis.Code$Variable
+com/hypersphere/Analysis/Impl.java
+ com.hypersphere.Analysis.Impl
+ com.hypersphere.Analysis.Impl$Block
+ com.hypersphere.Analysis.Impl$Declarator
+ com.hypersphere.Analysis.Impl$Function
+ com.hypersphere.Analysis.Impl$ParameterTypeList
+ com.hypersphere.Analysis.Impl$Statement
+ com.hypersphere.Analysis.Impl$Statement$Expression
+ com.hypersphere.Analysis.Impl$Statement$VariableDeclaration
+ com.hypersphere.Analysis.Impl$Type
+ com.hypersphere.Analysis.Impl$Variable
+com/hypersphere/Analysis/Visitors.java
+ com.hypersphere.Analysis.Visitors
+ com.hypersphere.Analysis.Visitors$BlockV
+ com.hypersphere.Analysis.Visitors$DeclaratorV
+ com.hypersphere.Analysis.Visitors$FunctionV
+ com.hypersphere.Analysis.Visitors$ParameterDeclarationV
+ com.hypersphere.Analysis.Visitors$ParameterTypeListV
+ com.hypersphere.Analysis.Visitors$StatementV
+ com.hypersphere.Analysis.Visitors$StatementV$ExpressionV
+ com.hypersphere.Analysis.Visitors$VariableDeclarationV

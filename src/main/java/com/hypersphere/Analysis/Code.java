@@ -7,7 +7,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import java.io.Reader;
 
-public class Code{
+public class Code extends AbstractCodeObject{
 
     public Impl.Function[] functions;
     public Impl.Declarator[] declarations;
@@ -22,11 +22,59 @@ public class Code{
         }
     }
 
+    @Override
+    String toString(int block_idx) {
+        return join(block_idx, (Object[]) functions);
+    }
+
+}
+
+abstract class AbstractCodeObject{
+
     public String toString(){
-        return Utils.join((Object[]) functions);
+        return toString(0);
+    }
+
+    abstract String toString(int block_idx);
+
+    public static String getString(int block_idx, Object o){
+        return o == null ? "" :
+                (o instanceof AbstractCodeObject ?
+                        ((AbstractCodeObject) o).toString(block_idx) :
+                        o.toString());
+    }
+
+    public static String join(int block_idx, Object... array){
+        return join(block_idx, "", array);
+    }
+
+    public static String joins(int block_idx, Object... array){
+        return join(block_idx, " ", array);
+    }
+
+    public static String join(int block_idx, String delim, Object... array){
+        if(array == null || array.length == 0)
+            return "";
+        StringBuilder sb = new StringBuilder(array[0] == null ? "" : array[0].toString());
+        for(int i = 1; i < array.length; ++i){
+            sb.append(delim);
+            if(array[i] != null)
+                sb.append(getString(block_idx, array[i]));
+        }
+        return sb.toString();
     }
 
 
+    public static String rep(int count){
+        return rep("\t", count);
+    }
+
+    public static String rep(String s, int count){
+        StringBuilder sb = new StringBuilder(s.length() * count);
+        for(int i = 0; i < count; ++i)
+            sb.append(s);
+        return sb.toString();
+    }
 }
 
 
