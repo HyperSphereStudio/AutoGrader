@@ -29,6 +29,8 @@ public class Impl {
         }
     }
 
+
+
     public static abstract class Statement extends AbstractCodeObject{
 
         String toString(int block_idx) {
@@ -37,21 +39,20 @@ public class Impl {
 
         public static class Expression extends Statement{
             public String name;
-            String toString(int block_idx) {
-                return super.toString(block_idx);
+            String toString(int block_idx) { return name; }
+
+            //Logical and Math should go here
+            public static class Chainable extends Expression{
+                public Expression[] children;
             }
 
-            public static class Logical extends Expression{
-
-            }
-
-            public static class Math extends Expression{
-
-            }
 
             public static class FunctionCall extends Expression{
-                
+                public Expression[] parameters;
+
+                String toString(int block_idx){ return super.toString(block_idx) + Utils.join("(", parameters, ")");}
             }
+
         }
 
         public static class VariableDeclaration extends Statement{
@@ -65,11 +66,14 @@ public class Impl {
         }
     }
 
+
+
     public static class Block extends AbstractCodeObject{
         public Statement[] statements;
 
         String toString(int block_idx) {
-            String tabs = rep(block_idx + 1);
+            block_idx++;
+            String tabs = rep(block_idx);
             return Utils.join("{\n", tabs, join(block_idx, Utils.join(";", tabs, "\n"), (Object[]) statements), "}\n");
         }
     }
