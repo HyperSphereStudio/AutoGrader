@@ -1,8 +1,6 @@
 package com.hypersphere;
 
-import com.hypersphere.IDE.CNTRL.IDE;
-import com.hypersphere.Plagairism.Plagairism;
-
+import com.hypersphere.Plagairism.Plagiarism;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Scanner;
@@ -33,7 +31,7 @@ public class AutoGrader {
         if(true){
          //
             //   new IDE().init();
-            Plagairism.Test();
+            Plagiarism.Test();
             return;
         }
 

@@ -6,6 +6,8 @@ import com.hypersphere.Utils;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import java.io.Reader;
+import java.io.StringReader;
+import java.util.Arrays;
 
 public class Code extends AbstractCodeObject{
 
@@ -13,11 +15,24 @@ public class Code extends AbstractCodeObject{
     public Impl.Declarator[] declarations;
     public Object[] children;
 
+    public Code(String s){
+        this(new StringReader(s));
+    }
+
+    public static CParser getParser(Reader r){
+        try {
+            return new CParser(new CommonTokenStream(new CLexer(CharStreams.fromReader(r))));
+        }catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Code(Reader r){
         try{
-            CParser parser = new CParser(new CommonTokenStream(new CLexer(CharStreams.fromReader(r))));
+            CParser parser = getParser(r);
             functions = Impl.ArrayOf(parser.functionDefinition(), Visitors.functionV, Impl.Function[]::new);
-        }catch(Exception e){
+        }catch(Exception e) {
             e.printStackTrace();
         }
     }

@@ -43,7 +43,7 @@ class Visitors {
 
         static class ExpressionV extends CBaseVisitor<Impl.Statement.Expression> {
             @Override public Impl.Statement.Expression visitAssignmentExpression(CParser.AssignmentExpressionContext ctx){
-                Utils.println(ctx.conditionalExpression()
+                ctx.conditionalExpression()
                                  .logicalOrExpression()
                                  .logicalAndExpression(0)
                                  .inclusiveOrExpression(0)
@@ -58,7 +58,7 @@ class Visitors {
                                  .unaryExpression()
                                  .postfixExpression()   //Where The parameters Lie
                                  .primaryExpression()   //Function Name
-                                 .getText());
+                                 .getText();
                 return null;
             }
         }
@@ -85,7 +85,6 @@ class Visitors {
             f.declaration.specifier = new Impl.Type(ctx.declarationSpecifiers().getText());
             f.declaration.isFunction = true;
             f.block = Visit(ctx.compoundStatement().blockItemList(), blockV);
-            Utils.println(f.block);
             return f;
         }
     }

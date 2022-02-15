@@ -4,12 +4,13 @@ com/hypersphere/IDE/Menu/Compile/CompileItem.java
  com.hypersphere.IDE.Menu.Compile.CompileItem$CompileAndRun
 com.hypersphere/Parse/CLexer.java
  com.hypersphere.Parse.CLexer
-com/hypersphere/IDE/Menu/About/AboutItem.java
- com.hypersphere.IDE.Menu.About.AboutItem
- com.hypersphere.IDE.Menu.About.AboutItem$1
- com.hypersphere.IDE.Menu.About.AboutItem$2
+com/hypersphere/Configuration.java
+ com.hypersphere.Configuration
 com/hypersphere/IDE/Menu/IDEAction.java
  com.hypersphere.IDE.Menu.IDEAction
+com/hypersphere/Analysis/Code.java
+ com.hypersphere.Analysis.AbstractCodeObject
+ com.hypersphere.Analysis.Code
 com.hypersphere/Parse/CParser.java
  com.hypersphere.Parse.CParser
  com.hypersphere.Parse.CParser$AbstractDeclaratorContext
@@ -103,8 +104,8 @@ com/hypersphere/IDE/Menu/IDEMenu.java
  com.hypersphere.IDE.Menu.IDEMenu
 com/hypersphere/IDE/SpellChecker/IDESpellChecker.java
  com.hypersphere.IDE.SpellChecker.IDESpellChecker
-com.hypersphere/Parse/CListener.java
- com.hypersphere.Parse.CListener
+com/hypersphere/IDE/CNTRL/IDE.java
+ com.hypersphere.IDE.CNTRL.IDE
 com/hypersphere/IDE/Menu/Settings/SettingsItem.java
  com.hypersphere.IDE.Menu.Settings.SettingsItem
 com/hypersphere/IDE/Menu/File/FileItem.java
@@ -113,6 +114,11 @@ com/hypersphere/IDE/Menu/File/FileItem.java
  com.hypersphere.IDE.Menu.File.FileItem$2
 com.hypersphere/Parse/CVisitor.java
  com.hypersphere.Parse.CVisitor
+com/hypersphere/Analysis/IntVector.java
+ com.hypersphere.Analysis.IntVector
+ com.hypersphere.Analysis.IntVector$DFunction
+com/hypersphere/IDE/CNTRL/IDEListener.java
+ com.hypersphere.IDE.CNTRL.IDEListener
 com/hypersphere/IDE/Menu/View/ViewItem.java
  com.hypersphere.IDE.Menu.View.ViewItem
  com.hypersphere.IDE.Menu.View.ViewItem$1
@@ -124,18 +130,42 @@ com/hypersphere/IDE/Menu/AbstractIDEMenu.java
  com.hypersphere.IDE.Menu.AbstractIDEMenu
 com/hypersphere/IDE/UI/StatusBar.java
  com.hypersphere.IDE.UI.StatusBar
-com/hypersphere/ConfigurationPOJO.java
- com.hypersphere.ConfigurationPOJO
+com/hypersphere/Analysis/Visitors.java
+ com.hypersphere.Analysis.Visitors
+ com.hypersphere.Analysis.Visitors$BlockV
+ com.hypersphere.Analysis.Visitors$DeclaratorV
+ com.hypersphere.Analysis.Visitors$FunctionV
+ com.hypersphere.Analysis.Visitors$ParameterDeclarationV
+ com.hypersphere.Analysis.Visitors$ParameterTypeListV
+ com.hypersphere.Analysis.Visitors$StatementV
+ com.hypersphere.Analysis.Visitors$StatementV$ExpressionV
+ com.hypersphere.Analysis.Visitors$VariableDeclarationV
+com/hypersphere/IDE/Code/CodeManager.java
+ com.hypersphere.IDE.Code.CodeManager
 com/hypersphere/IDE/UI/IDEUI.java
  com.hypersphere.IDE.UI.IDEUI
-com/hypersphere/IDE/UI/IDEFrame.java
- com.hypersphere.IDE.UI.IDEFrame
-com/hypersphere/IDE/IDEObj.java
- com.hypersphere.IDE.IDEObj
-com.hypersphere/Parse/CBaseListener.java
- com.hypersphere.Parse.CBaseListener
+com/hypersphere/IDE/UI/IDETextArea.java
+ com.hypersphere.IDE.UI.IDETextArea
+ com.hypersphere.IDE.UI.IDETextArea$1
+com/hypersphere/Utils.java
+ com.hypersphere.Utils
 com.hypersphere/Parse/CBaseVisitor.java
  com.hypersphere.Parse.CBaseVisitor
+com.hypersphere/Parse/CBaseListener.java
+ com.hypersphere.Parse.CBaseListener
+com/hypersphere/Analysis/Impl.java
+ com.hypersphere.Analysis.Impl
+ com.hypersphere.Analysis.Impl$Block
+ com.hypersphere.Analysis.Impl$Declarator
+ com.hypersphere.Analysis.Impl$Function
+ com.hypersphere.Analysis.Impl$ParameterTypeList
+ com.hypersphere.Analysis.Impl$Statement
+ com.hypersphere.Analysis.Impl$Statement$Expression
+ com.hypersphere.Analysis.Impl$Statement$Expression$Chainable
+ com.hypersphere.Analysis.Impl$Statement$Expression$FunctionCall
+ com.hypersphere.Analysis.Impl$Statement$VariableDeclaration
+ com.hypersphere.Analysis.Impl$Type
+ com.hypersphere.Analysis.Impl$Variable
 com/hypersphere/IDE/Menu/Search/SearchItem.java
  com.hypersphere.IDE.Menu.Search.SearchItem
  com.hypersphere.IDE.Menu.Search.SearchItem$1
@@ -147,49 +177,23 @@ com/hypersphere/IDE/Menu/AbstractIDEAction.java
 com/hypersphere/IDE/Menu/Look/LookAndFeelItem.java
  com.hypersphere.IDE.Menu.Look.Look
  com.hypersphere.IDE.Menu.Look.LookAndFeelItem
-com/hypersphere/IDE/CNTRL/IDEListener.java
- com.hypersphere.IDE.CNTRL.IDEListener
-com/hypersphere/AutoGrader.java
- com.hypersphere.AutoGrader
-com/hypersphere/Analysis/IntVector.java
- com.hypersphere.Analysis.IntVector
- com.hypersphere.Analysis.IntVector$DFunction
-com/hypersphere/IDE/CNTRL/IDE.java
- com.hypersphere.IDE.CNTRL.IDE
-com/hypersphere/Utils.java
- com.hypersphere.Utils
-com/hypersphere/IDE/Code/CodeManager.java
- com.hypersphere.IDE.Code.CodeManager
 com/hypersphere/IDE/Code/Code.java
  com.hypersphere.IDE.Code.Code
-com/hypersphere/Configuration.java
- com.hypersphere.Configuration
-com/hypersphere/IDE/UI/IDETextArea.java
- com.hypersphere.IDE.UI.IDETextArea
- com.hypersphere.IDE.UI.IDETextArea$1
-com/hypersphere/Plagairism/Plagairism.java
- com.hypersphere.Plagairism.Plagairism
-com/hypersphere/Analysis/Code.java
- com.hypersphere.Analysis.AbstractCodeObject
- com.hypersphere.Analysis.Code
-com/hypersphere/Analysis/Impl.java
- com.hypersphere.Analysis.Impl
- com.hypersphere.Analysis.Impl$Block
- com.hypersphere.Analysis.Impl$Declarator
- com.hypersphere.Analysis.Impl$Function
- com.hypersphere.Analysis.Impl$ParameterTypeList
- com.hypersphere.Analysis.Impl$Statement
- com.hypersphere.Analysis.Impl$Statement$Expression
- com.hypersphere.Analysis.Impl$Statement$VariableDeclaration
- com.hypersphere.Analysis.Impl$Type
- com.hypersphere.Analysis.Impl$Variable
-com/hypersphere/Analysis/Visitors.java
- com.hypersphere.Analysis.Visitors
- com.hypersphere.Analysis.Visitors$BlockV
- com.hypersphere.Analysis.Visitors$DeclaratorV
- com.hypersphere.Analysis.Visitors$FunctionV
- com.hypersphere.Analysis.Visitors$ParameterDeclarationV
- com.hypersphere.Analysis.Visitors$ParameterTypeListV
- com.hypersphere.Analysis.Visitors$StatementV
- com.hypersphere.Analysis.Visitors$StatementV$ExpressionV
- com.hypersphere.Analysis.Visitors$VariableDeclarationV
+com/hypersphere/IDE/IDEObj.java
+ com.hypersphere.IDE.IDEObj
+com/hypersphere/IDE/UI/IDEFrame.java
+ com.hypersphere.IDE.UI.IDEFrame
+com/hypersphere/IDE/Menu/About/AboutItem.java
+ com.hypersphere.IDE.Menu.About.AboutItem
+ com.hypersphere.IDE.Menu.About.AboutItem$1
+ com.hypersphere.IDE.Menu.About.AboutItem$2
+com.hypersphere/Parse/CListener.java
+ com.hypersphere.Parse.CListener
+com/hypersphere/ConfigurationPOJO.java
+ com.hypersphere.ConfigurationPOJO
+com/hypersphere/AutoGrader.java
+ com.hypersphere.AutoGrader
+com/hypersphere/Plagairism/Plagiarism.java
+ com.hypersphere.Plagairism.Plagiarism
+ com.hypersphere.Plagairism.Submission
+ com.hypersphere.Plagairism.SubmissionPair

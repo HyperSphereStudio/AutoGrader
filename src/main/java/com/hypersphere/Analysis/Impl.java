@@ -66,8 +66,6 @@ public class Impl {
         }
     }
 
-
-
     public static class Block extends AbstractCodeObject{
         public Statement[] statements;
 
@@ -82,7 +80,7 @@ public class Impl {
         public Variable[] parameters;
 
         String toString(int block_idx) {
-            return join(block_idx, ",", (Object[]) parameters);
+            return Utils.join(",", (Object[]) parameters);
         }
     }
 
@@ -106,7 +104,7 @@ public class Impl {
         }
     }
 
-    static <T> T[] ArrayOf(ParserRuleContext ctx, ParseTreeVisitor v, IntFunction<T[]> generator) {
+    public static <T> T[] ArrayOf(ParserRuleContext ctx, ParseTreeVisitor v, IntFunction<T[]> generator) {
         return Stream.of(ctx).map(m -> Visitors.Visit(m, v)).toArray(generator);
     }
 }
