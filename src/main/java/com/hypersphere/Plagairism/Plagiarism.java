@@ -1,7 +1,6 @@
 package com.hypersphere.Plagairism;
 
 import com.hypersphere.Analysis.Code;
-import com.hypersphere.Analysis.Impl;
 import com.hypersphere.Analysis.IntVector;
 import com.hypersphere.Parse.CParser;
 import com.hypersphere.Utils;
@@ -10,52 +9,82 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.StringReader;
 import java.util.*;
 
 public class Plagiarism{
 
-    public static void Test(){
-        try{
-            CheckForPlagiarism(new File("file/test.c"), new File("file"));
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+    private final List<SubmissionPair> pairs, normalizedPairs;
 
-    public static void CheckForPlagiarism(File baseFile, File fileDir){
+    public Plagiarism(File instructorFile, File submissionDirectory){
         Submission base = null;
-        if(baseFile != null && baseFile.exists())
-            base = new Submission(baseFile, null);
+        if(instructorFile != null && instructorFile.exists())
+            base = new Submission(instructorFile, null);
         final int[] basefreqs = base == null ? null : base.getFreqs();
 
-        Submission[] p = Arrays.stream(fileDir.listFiles()).map(x -> new Submission(x, basefreqs))
+        Submission[] p = Arrays.stream(submissionDirectory.listFiles()).map(x -> new Submission(x, basefreqs))
                 .toArray(Submission[]::new);
 
-        List<SubmissionPair> pairs = new ArrayList<>();
-        List<SubmissionPair> normalizedpairs = new ArrayList<>();
+        pairs = new ArrayList<>();
+        normalizedPairs = new ArrayList<>();
         HashSet<String> pairSet = new HashSet<>();
 
-        for(int i = 0; i < p.length; ++i)
-            for(int i2 = 0; i2 < p.length; ++i2){
-                String key = p[i].getSource().getName() + "::" + p[i2].getSource().getName();
-                String reverseKey = p[i2].getSource().getName() + "::" + p[i].getSource().getName();
-                if(!pairSet.contains(key) && !pairSet.contains(reverseKey) && !key.equals(reverseKey)){
-                    pairs.add(new SubmissionPair(p[i], p[i2]));
+        for (Submission value : p)
+            for (Submission submission : p) {
+                String key = value.getSource().getName() + "::" + submission.getSource().getName();
+                String reverseKey = submission.getSource().getName() + "::" + value.getSource().getName();
+                if (!pairSet.contains(key) && !pairSet.contains(reverseKey) && !key.equals(reverseKey)) {
+                    pairs.add(new SubmissionPair(value, submission));
 
-                    SubmissionPair np = new SubmissionPair(p[i], p[i2]);
+                    SubmissionPair np = new SubmissionPair(value, submission);
                     np.setNormalizedMode(true);
-                    normalizedpairs.add(np);
+                    normalizedPairs.add(np);
 
                     pairSet.add(key);
                 }
             }
 
         Collections.sort(pairs, Collections.reverseOrder());
-        Collections.sort(normalizedpairs, Collections.reverseOrder());
+        Collections.sort(normalizedPairs, Collections.reverseOrder());
+    }
 
-        Utils.println(pairs);
-        Utils.println(normalizedpairs);
+    public List<SubmissionPair> getAllPairs(File sourceFile){
+        List<SubmissionPair> l = new ArrayList<>();
+        for(SubmissionPair pair : pairs){
+            if(pair.getSub1().getSource().equals(sourceFile) || pair.getSub2().getSource().equals(sourceFile)){
+                l.add(pair);
+            }
+        }
+        return l;
+    }
+
+    public List<SubmissionPair> getAllNormalizedPairs(File sourceFile){
+        List<SubmissionPair> l = new ArrayList<>();
+        for(SubmissionPair pair : normalizedPairs){
+            if(pair.getSub1().getSource().equals(sourceFile) || pair.getSub2().getSource().equals(sourceFile)){
+                l.add(pair);
+            }
+        }
+        return l;
+    }
+
+    public List<SubmissionPair> getPairs(){
+        return pairs;
+    }
+
+    public List<SubmissionPair> getNormalizedPairs(){
+        return normalizedPairs;
+    }
+
+    public String toString(){
+        return "Plagiarism Test. Pair Results:" + pairs + " \nNormalized Pair Results:" + normalizedPairs;
+    }
+
+    public static void Test(){
+        try{
+            Utils.println(new Plagiarism(new File("file/test.c"), new File("file")));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
 
