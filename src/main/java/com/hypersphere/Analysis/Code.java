@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.List;
 
 public class Code extends AbstractCodeObject{
@@ -48,6 +49,10 @@ abstract class AbstractCodeObject{
     }
 
     abstract String toString(int block_idx);
+
+    public static <T> List<T> asList(T... o){
+        return Arrays.asList(o);
+    }
 
     public static String getString(int block_idx, Object o){
         return o == null ? "" :

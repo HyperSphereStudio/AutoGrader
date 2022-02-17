@@ -3,6 +3,7 @@ package com.hypersphere.Analysis;
 import com.hypersphere.Parse.CParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class Visitors {
@@ -35,10 +36,10 @@ class Visitors {
         public Impl.CDeclarationList _visit(CParser.DeclarationListContext ctx){
             List<CParser.DeclarationContext> ctxs = ctx.declaration();
             Impl.CDeclarationList l = new Impl.CDeclarationList();
-            l.declarations = new Impl.CDeclaration[ctxs.size()];
+            l.declarations = new ArrayList<>(ctxs.size());
             CDeclarationVisitor dv = new CDeclarationVisitor(l);
             for(int i = 0; i < ctxs.size(); ++i)
-                l.declarations[i] = dv.visit(ctxs.get(i));
+                l.declarations.set(i, dv.visit(ctxs.get(i)));
             return l;
         }
     }

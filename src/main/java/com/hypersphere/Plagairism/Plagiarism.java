@@ -5,8 +5,6 @@ import com.hypersphere.Analysis.Impl;
 import com.hypersphere.Analysis.IntVector;
 import com.hypersphere.Parse.CParser;
 import com.hypersphere.Utils;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.File;
 import java.io.FileReader;
@@ -197,13 +195,31 @@ class Submission {
         return source.getName();
     }
 
-    private static <T extends Impl.AbstractCObject> void recursiveWalk(Impl.AbstractCObject<T> c, int[] freqs){
-        if(c != null){
-            T[] children = c.getChildren();
-            for (T child : children){
-                recursiveWalk(child, freqs);
-                freqs[child.getObjectIdx()]++;
+    private static void recursiveWalk(Object o, int[] freqs){
+        if(o != null){
+            if(o instanceof Impl.AbstractCObject){
+                Impl.AbstractCObject c = (Impl.AbstractCObject) o;
+                freqs[clazzIndexes.get(c.getClass())]++;
+                recursiveWalk(c.getChildren(), freqs);
+            }else if(o instanceof List){
+                for(Object child : ((List) o)){
+                    recursiveWalk(child, freqs);
+                }
             }
         }
+    }
+
+
+    private static final HashMap<Class, Integer> clazzIndexes = new HashMap<>();
+
+    private static void recursiveAddClasses(Class c){
+        for(Class clazz : c.getClasses()){
+            clazzIndexes.put(clazz, clazzIndexes.size());
+            recursiveAddClasses(clazz);
+        }
+    }
+
+    static{
+        recursiveAddClasses(Impl.class);
     }
 }
