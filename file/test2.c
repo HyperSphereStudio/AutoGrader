@@ -1,12 +1,18 @@
 #include <stdio.h>
 
-int main() {
+int test(){
 
-   printf("Hello, World!");
-   printf("Hello, World!");
-   printf("Hello, World!");
-   printf("Hello, World!");
-   printf("Hello, World!");
+}
 
-   return 0;
+int main(int i) {
+
+    int my_other_var = 10;
+
+    printf("Hello, World!");
+    printf("Hello, World!");
+    printf("Hello, World!");
+    printf("Hello, World!");
+
+
+    return 0;
 }

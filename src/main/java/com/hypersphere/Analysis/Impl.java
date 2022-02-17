@@ -1,110 +1,61 @@
 package com.hypersphere.Analysis;
 
-import com.hypersphere.Utils;
+import com.hypersphere.Parse.CParser;
+import com.hypersphere.Parse.CVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
+import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Stream;
 
 public class Impl {
 
-    public static class Function extends AbstractCodeObject{
-        public Declarator declaration;
-        public Block block;
+    public static abstract class AbstractCObject<T>{
+        public abstract String toString(int block_idx);
+        public String toString(){
+            return toString(0);
+        }
+        public abstract T[] getChildren();
+        public abstract int getObjectIdx();
+    }
 
-        String toString(int block_idx){
-            return join(block_idx, declaration, block);
+    public static class CDeclaration extends AbstractCObject{
+
+        @Override
+        public String toString(int block_idx) {
+            return null;
+        }
+
+        @Override
+        public AbstractCObject[] getChildren() {
+            return new AbstractCObject[0];
+        }
+
+        @Override
+        public int getObjectIdx() {
+            return CParser.RULE_declaration;
         }
     }
 
-    public static class Declarator extends AbstractCodeObject{
-        public String name;
-        public Type specifier;
-        public ParameterTypeList paramList;
-        public boolean isFunction;
+    public static class CDeclarationList extends AbstractCObject<CDeclaration>{
+        public CDeclaration[] declarations;
+        @Override
+        public String toString(int block_idx) {
+            return null;
+        }
 
-        String toString(int block_idx) {
-            return rep(block_idx) + joins(block_idx, specifier, name) + (isFunction ? join(block_idx,'(', paramList, ")") : ";");
+        @Override
+        public CDeclaration[] getChildren() {
+            return declarations;
+        }
+        @Override
+        public int getObjectIdx() {
+            return CParser.RULE_declarationList;
         }
     }
 
 
-
-    public static abstract class Statement extends AbstractCodeObject{
-
-        String toString(int block_idx) {
-            return rep(block_idx);
-        }
-
-        public static class Expression extends Statement{
-            public String name;
-            String toString(int block_idx) { return name; }
-
-            //Logical and Math should go here
-            public static class Chainable extends Expression{
-                public Expression[] children;
-            }
-
-
-            public static class FunctionCall extends Expression{
-                public Expression[] parameters;
-
-                String toString(int block_idx){ return super.toString(block_idx) + Utils.join("(", parameters, ")");}
-            }
-
-        }
-
-        public static class VariableDeclaration extends Statement{
-            public String name;
-            public Type specifier;
-            public Statement initStatement;
-
-            String toString(int block_idx) {
-                return rep(block_idx) + joins(block_idx, specifier, name) + getString(block_idx, initStatement);
-            }
-        }
-    }
-
-    public static class Block extends AbstractCodeObject{
-        public Statement[] statements;
-
-        String toString(int block_idx) {
-            block_idx++;
-            String tabs = rep(block_idx);
-            return Utils.join("{\n", tabs, join(block_idx, Utils.join(";", tabs, "\n"), (Object[]) statements), "}\n");
-        }
-    }
-
-    public static class ParameterTypeList extends AbstractCodeObject{
-        public Variable[] parameters;
-
-        String toString(int block_idx) {
-            return Utils.join(",", (Object[]) parameters);
-        }
-    }
-
-    public static class Variable extends AbstractCodeObject{
-        public Type type;
-        public String name;
-
-        String toString(int block_idx){
-            return joins(block_idx, type, name);
-        }
-    }
-
-    public static class Type extends AbstractCodeObject{
-        public String name;
-        public Type(String name){
-            this.name = name;
-        }
-
-        String toString(int block_idx){
-            return name;
-        }
-    }
-
-    public static <T> T[] ArrayOf(ParserRuleContext ctx, ParseTreeVisitor v, IntFunction<T[]> generator) {
-        return Stream.of(ctx).map(m -> Visitors.Visit(m, v)).toArray(generator);
+    public static <T> T[] ArrayOf(ParserRuleContext ctx, CVisitor v, IntFunction<T[]> generator) {
+        return Stream.of(ctx).map((Function<ParserRuleContext, Object>) v::visit).toArray(generator);
     }
 }

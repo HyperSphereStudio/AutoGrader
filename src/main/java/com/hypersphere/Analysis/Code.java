@@ -2,18 +2,15 @@ package com.hypersphere.Analysis;
 
 import com.hypersphere.Parse.CLexer;
 import com.hypersphere.Parse.CParser;
-import com.hypersphere.Utils;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Arrays;
+import java.util.List;
 
 public class Code extends AbstractCodeObject{
 
-    public Impl.Function[] functions;
-    public Impl.Declarator[] declarations;
-    public Object[] children;
+    public Impl.CDeclarationList declarationList;
 
     public Code(String s){
         this(new StringReader(s));
@@ -31,7 +28,7 @@ public class Code extends AbstractCodeObject{
     public Code(Reader r){
         try{
             CParser parser = getParser(r);
-            functions = Impl.ArrayOf(parser.functionDefinition(), Visitors.functionV, Impl.Function[]::new);
+            declarationList = new Visitors.CDeclarationListVisitor(null).visit(parser.declarationList());
         }catch(Exception e) {
             e.printStackTrace();
         }
@@ -39,7 +36,7 @@ public class Code extends AbstractCodeObject{
 
     @Override
     String toString(int block_idx) {
-        return join(block_idx, (Object[]) functions);
+        return join(block_idx);
     }
 
 }

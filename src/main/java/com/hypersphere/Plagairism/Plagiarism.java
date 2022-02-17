@@ -1,6 +1,7 @@
 package com.hypersphere.Plagairism;
 
 import com.hypersphere.Analysis.Code;
+import com.hypersphere.Analysis.Impl;
 import com.hypersphere.Analysis.IntVector;
 import com.hypersphere.Parse.CParser;
 import com.hypersphere.Utils;
@@ -152,18 +153,17 @@ class Submission {
     public Submission(File f, int[] basefreqs) {
         source = f;
         try(FileReader fr = new FileReader(f)){
+            Code c = new Code(fr);
 
-            CParser cp = Code.getParser(fr);
-            CParser.FunctionDefinitionContext pc = cp.functionDefinition();
+            recursiveWalk(c.declarationList, freqs);
 
-            recursiveWalk(pc, freqs);
-
+            Utils.println(Arrays.toString(freqs));
             if(basefreqs != null){
                 normalizedfreqs = new int[freqs.length];
                 for(int i = 0; i < freqs.length; ++i){
                     normalizedfreqs[i] = freqs[i] - basefreqs[i];
                 }
-            }
+            }else normalizedfreqs = freqs;
         }catch(Exception e) {
             e.printStackTrace();
         }
@@ -197,13 +197,13 @@ class Submission {
         return source.getName();
     }
 
-    private static void recursiveWalk(ParseTree tree, int[] freqs){
-        if(tree != null){
-            for(int i = 0; i < tree.getChildCount(); ++i){
-                recursiveWalk(tree.getChild(i), freqs);
+    private static <T extends Impl.AbstractCObject> void recursiveWalk(Impl.AbstractCObject<T> c, int[] freqs){
+        if(c != null){
+            T[] children = c.getChildren();
+            for (T child : children){
+                recursiveWalk(child, freqs);
+                freqs[child.getObjectIdx()]++;
             }
-            if(tree instanceof ParserRuleContext)
-                freqs[((ParserRuleContext) tree).getRuleIndex()]++;
         }
     }
 }
