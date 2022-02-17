@@ -2,6 +2,7 @@ package com.hypersphere.Analysis;
 
 import com.hypersphere.Parse.CParser;
 import com.hypersphere.Parse.CVisitor;
+import com.hypersphere.Utils;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.util.function.Function;
@@ -10,8 +11,7 @@ import java.util.stream.Stream;
 
 public class Impl {
 
-    public static abstract class AbstractCObject<T>{
-        public abstract String toString(int block_idx);
+    public static abstract class AbstractCObject<T> extends AbstractCodeObject{
         public String toString(){
             return toString(0);
         }
@@ -39,9 +39,10 @@ public class Impl {
 
     public static class CDeclarationList extends AbstractCObject<CDeclaration>{
         public CDeclaration[] declarations;
+
         @Override
         public String toString(int block_idx) {
-            return null;
+            return join(block_idx, (Object[]) declarations);
         }
 
         @Override
