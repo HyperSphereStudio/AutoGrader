@@ -4,6 +4,9 @@ import com.hypersphere.Parse.CLexer;
 import com.hypersphere.Parse.CParser;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+
+import java.io.File;
+import java.io.FileReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
@@ -15,6 +18,10 @@ public class Code extends AbstractCodeObject{
 
     public Code(String s){
         this(new StringReader(s));
+    }
+
+    public Code(File f){
+        this(getFileReader(f));
     }
 
     public static CParser getParser(Reader r){
@@ -38,6 +45,16 @@ public class Code extends AbstractCodeObject{
     @Override
     String toString(int block_idx) {
         return join(block_idx);
+    }
+
+
+    private static FileReader getFileReader(File f){
+        try{
+            return new FileReader(f);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

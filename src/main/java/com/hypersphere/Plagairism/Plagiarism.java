@@ -80,7 +80,9 @@ public class Plagiarism{
 
     public static void Test(){
         try{
-            Utils.println(new Plagiarism(new File("file/test.c"), new File("file")));
+            Code c = new Code(new File("file/test.c"));
+            System.out.println(c);
+        //    Utils.println(new Plagiarism(new File("file/test.c"), new File("file")));
         }catch(Exception e){
             e.printStackTrace();
         }
