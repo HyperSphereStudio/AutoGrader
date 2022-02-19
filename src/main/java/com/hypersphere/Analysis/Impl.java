@@ -229,26 +229,26 @@ public class Impl {
         }
     }
     public static class CType extends AbstractCObject {
-        private Value.CString type;
+        private String type;
 
         @Override
         public String toString(int block_idx) {
             return type.toString();
         }
 
-        public Value.CString setPointerName(Value.CString name){
+        public void setPointerName(String name){
             throw new Error("Not Implemented");
         }
 
-        public Value.CString getPointerName(){
+        public String getPointerName(){
             throw new Error("Not Implemented");
         }
 
-        public Value.CString setStructName(Value.CString name){
+        public void setStructName(String name){
             throw new Error("Not Implemented");
         }
 
-        public Value.CString getStructName(){
+        public String getStructName(){
             throw new Error("Not Implemented");
         }
 
@@ -273,11 +273,11 @@ public class Impl {
             return null;
         }
 
-        public Value.CString getType() {
+        public String getType() {
             return type;
         }
 
-        public void setType(Value.CString type) {
+        public void setType(String type) {
             this.type = type;
         }
     }
@@ -287,7 +287,7 @@ public class Impl {
 
         @Override
         String toString(int block_idx) {
-            return Utils.join("\n", expressionList);
+            return "{\n\t" + Utils.join("\n", expressionList) + "\n}";
         }
 
         @Override
@@ -305,20 +305,20 @@ public class Impl {
     }
 
     public static abstract class CExpression extends AbstractCObject{
-        public static final Value.CString
-                            VALUE_NAME = new Value.CString("__CONSTANT__"),
-                            SWITCH_NAME = new Value.CString("__SWITCH__"),
-                            TERNARY_NAME = new Value.CString("__TERNARY__"),
-                            ASM_NAME = new Value.CString("__ASM__"),
-                            VAR_INIT_NAME = new Value.CString("__VAR_INIT__");
+        public static final String
+                            VALUE_NAME = "__CONSTANT__",
+                            SWITCH_NAME = "__SWITCH__",
+                            TERNARY_NAME = "__TERNARY__",
+                            ASM_NAME = "__ASM__",
+                            VAR_INIT_NAME = "__VAR_INIT__";
 
         @Override
         public List getChildren() {
             return asList(getName(), getChildExpressions());
         }
 
-        public abstract Value.CString getName();
-        public abstract void setName(Value.CString name);
+        public abstract String getName();
+        public abstract void setName(String name);
         public abstract List<CExpression> getChildExpressions();
         public abstract void setChildExpressions(List<CExpression> childExpressions);
 
@@ -330,10 +330,10 @@ public class Impl {
             }
 
             @Override
-            public Value.CString getName() { return VALUE_NAME; }
+            public String getName() { return VALUE_NAME; }
 
             @Override
-            public void setName(Value.CString name) {}
+            public void setName(String name) {}
 
             @Override
             public List<CExpression> getChildExpressions() { return null; }
@@ -360,10 +360,10 @@ public class Impl {
             private List<Value> branchConditions;
 
             @Override
-            public Value.CString getName() { return SWITCH_NAME; }
+            public String getName() { return SWITCH_NAME; }
 
             @Override
-            public void setName(Value.CString name) {}
+            public void setName(String name) {}
 
             @Override
             public List<CExpression> getChildExpressions() { return branches; }
@@ -411,10 +411,10 @@ public class Impl {
             }
 
             @Override
-            public Value.CString getName() { return TERNARY_NAME; }
+            public String getName() { return TERNARY_NAME; }
 
             @Override
-            public void setName(Value.CString name) {}
+            public void setName(String name) {}
 
             @Override
             public List<CExpression> getChildExpressions() { return asList(condition, onTrue, onFalse); }
@@ -456,17 +456,17 @@ public class Impl {
             }
         }
         public static class ASMExpression extends CExpression {
-            private Value.CString asmValue;
+            private String asmValue;
 
-            public ASMExpression(Value.CString asmValue){
+            public ASMExpression(String asmValue){
                 this.asmValue = asmValue;
             }
 
             @Override
-            public Value.CString getName() { return ASM_NAME; }
+            public String getName() { return ASM_NAME; }
 
             @Override
-            public void setName(Value.CString name) {}
+            public void setName(String name) {}
 
             @Override
             public List<CExpression> getChildExpressions() { return null; }
@@ -474,11 +474,11 @@ public class Impl {
             @Override
             public void setChildExpressions(List<CExpression> childExpressions) {}
 
-            public Value.CString getAsmValue() {
+            public String getAsmValue() {
                 return asmValue;
             }
 
-            public void setAsmValue(Value.CString asmValue) {
+            public void setAsmValue(String asmValue) {
                 this.asmValue = asmValue;
             }
 
@@ -505,12 +505,12 @@ public class Impl {
             }
 
             @Override
-            public Value.CString getName() {
+            public String getName() {
                 return VAR_INIT_NAME;
             }
 
             @Override
-            public void setName(Value.CString name) {
+            public void setName(String name) {
 
             }
 
@@ -526,7 +526,7 @@ public class Impl {
         }
         public static class FunctionCallExpression extends CExpression{
 
-            private Value.CString functionName;
+            private String functionName;
             private List<CExpression> arguments;
 
             @Override
@@ -535,13 +535,13 @@ public class Impl {
             }
 
             @Override
-            public Value.CString getName() {
-                return VAR_INIT_NAME;
+            public String getName() {
+                return functionName;
             }
 
             @Override
-            public void setName(Value.CString name) {
-
+            public void setName(String name) {
+                this.functionName = name;
             }
 
             @Override
@@ -552,14 +552,6 @@ public class Impl {
             @Override
             public void setChildExpressions(List<CExpression> childExpressions) {
 
-            }
-
-            public Value.CString getFunctionName() {
-                return functionName;
-            }
-
-            public void setFunctionName(Value.CString functionName) {
-                this.functionName = functionName;
             }
 
             public List<CExpression> getArguments() {
@@ -572,7 +564,7 @@ public class Impl {
         }
         public static class BinaryOperatorExpression extends CExpression{
 
-            private Value.CString operatorName;
+            private String operatorName;
             private CExpression a, b;
 
             @Override
@@ -581,13 +573,13 @@ public class Impl {
             }
 
             @Override
-            public Value.CString getName() {
-                return VAR_INIT_NAME;
+            public String getName() {
+                return operatorName;
             }
 
             @Override
-            public void setName(Value.CString name) {
-
+            public void setName(String name) {
+                   operatorName = name;
             }
 
             @Override
@@ -598,14 +590,6 @@ public class Impl {
             @Override
             public void setChildExpressions(List<CExpression> childExpressions) {
 
-            }
-
-            public Value.CString getOperatorName() {
-                return operatorName;
-            }
-
-            public void setOperatorName(Value.CString operatorName) {
-                this.operatorName = operatorName;
             }
 
             public List<CExpression> getArguments() {
@@ -619,7 +603,7 @@ public class Impl {
         }
         public static class UnaryOperatorExpression extends CExpression{
 
-            private Value.CString operatorName;
+            private String operatorName;
             private CExpression a;
             private boolean isPrefix;
 
@@ -640,12 +624,12 @@ public class Impl {
             }
 
             @Override
-            public Value.CString getName() {
-                return VAR_INIT_NAME;
+            public String getName() {
+                return operatorName;
             }
 
             @Override
-            public void setName(Value.CString name) {
+            public void setName(String name) {
 
             }
 
@@ -659,14 +643,6 @@ public class Impl {
 
             }
 
-            public Value.CString getOperatorName() {
-                return operatorName;
-            }
-
-            public void setOperatorName(Value.CString operatorName) {
-                this.operatorName = operatorName;
-            }
-
             public List<CExpression> getArguments() {
                 return asList(a);
             }
@@ -678,6 +654,20 @@ public class Impl {
     }
 
     public static abstract class CDeclaration extends AbstractCObject{
+        protected List<String> attributes;
+
+        public List<String> getAttributes() {
+            return attributes;
+        }
+
+        public void setAttributes(List<String> attributes) {
+            this.attributes = attributes;
+        }
+
+        @Override
+        String toString(int block_idx) {
+            return Utils.join(" ", attributes);
+        }
 
         public static class Comment extends CDeclaration{
             private Value.CString value;
@@ -701,7 +691,7 @@ public class Impl {
 
             @Override
             String toString(int block_idx) {
-                return rep(block_idx) + value;
+                return rep(block_idx) + super.toString(block_idx) + " " + value;
             }
 
             @Override
@@ -731,7 +721,7 @@ public class Impl {
 
             @Override
             String toString(int block_idx) {
-                return name + Utils.join(" ", parameters);
+                return super.toString(block_idx) + " " + name + Utils.join(" ", parameters);
             }
 
             @Override
@@ -740,14 +730,14 @@ public class Impl {
             }
         }
         public static class Variable extends CDeclaration{
-            private Value.CString name;
+            private String name;
             private CType type;
 
-            public Value.CString getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Value.CString name) {
+            public void setName(String name) {
                 this.name = name;
             }
 
@@ -761,7 +751,7 @@ public class Impl {
 
             @Override
             String toString(int block_idx) {
-                return Utils.join(" ", type, name);
+                return super.toString(block_idx) + " " + Utils.join(" ", type, name);
             }
 
             @Override
@@ -770,25 +760,17 @@ public class Impl {
             }
         }
         public static class Function extends CDeclaration{
-            private Value.CString name;
-            private List<Value.CString> attributes;
+            private String name;
             private CType return_type;
             private List<Variable> arguments;
+            private CBlock block;
 
-            public Value.CString getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Value.CString name) {
+            public void setName(String name) {
                 this.name = name;
-            }
-
-            public List<Value.CString> getAttributes() {
-                return attributes;
-            }
-
-            public void setAttributes(List<Value.CString> attributes) {
-                this.attributes = attributes;
             }
 
             public CType getReturn_type() {
@@ -807,14 +789,22 @@ public class Impl {
                 this.arguments = arguments;
             }
 
+            public CBlock getBlock() {
+                return block;
+            }
+
+            public void setBlock(CBlock block) {
+                this.block = block;
+            }
+
             @Override
             String toString(int block_idx) {
-                return Utils.join(" ", attributes, return_type, name) + "(" + Utils.join(",", arguments) + ")";
+                return super.toString(block_idx) + " " + name + "(" + Utils.join(",", arguments) + ")";
             }
 
             @Override
             public List getChildren() {
-                return asList(name, attributes, return_type, arguments);
+                return asList(name, attributes, return_type, arguments, block);
             }
         }
     }

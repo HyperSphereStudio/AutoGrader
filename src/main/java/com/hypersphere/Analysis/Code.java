@@ -2,8 +2,10 @@ package com.hypersphere.Analysis;
 
 import com.hypersphere.Parse.CLexer;
 import com.hypersphere.Parse.CParser;
+import com.hypersphere.Utils;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.File;
 import java.io.FileReader;
@@ -35,8 +37,7 @@ public class Code extends AbstractCodeObject{
 
     public Code(Reader r){
         try{
-            CParser parser = getParser(r);
-            declarationList = new Visitors.CDeclarationListVisitor(null).visit(parser.declarationList());
+            declarationList = new CImplVisitor().visit(getParser(r).translationUnit());
         }catch(Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +45,7 @@ public class Code extends AbstractCodeObject{
 
     @Override
     String toString(int block_idx) {
-        return join(block_idx);
+        return join(block_idx, declarationList);
     }
 
 

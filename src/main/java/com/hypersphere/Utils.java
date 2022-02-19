@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import com.hypersphere.Parse.CParser;
+import org.antlr.v4.runtime.ParserRuleContext;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +16,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +24,13 @@ import java.util.List;
 
 public class Utils {
 
+    private static final List<String> rules = Arrays.asList(CParser.ruleNames);
+
     public static final ObjectMapper mapper = createMapper();
+
+    public static void printStringTree(ParserRuleContext ctx){
+        println(ctx.toStringTree(rules));
+    }
 
     public static String join(Object... array){
         return join("", array);

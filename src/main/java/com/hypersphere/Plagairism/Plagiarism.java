@@ -3,8 +3,11 @@ package com.hypersphere.Plagairism;
 import com.hypersphere.Analysis.Code;
 import com.hypersphere.Analysis.Impl;
 import com.hypersphere.Analysis.IntVector;
+import com.hypersphere.Parse.CBaseListener;
 import com.hypersphere.Parse.CParser;
 import com.hypersphere.Utils;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.File;
 import java.io.FileReader;
@@ -34,9 +37,11 @@ public class Plagiarism{
                 if (!pairSet.contains(key) && !pairSet.contains(reverseKey) && !key.equals(reverseKey)) {
                     pairs.add(new SubmissionPair(value, submission));
 
-                    SubmissionPair np = new SubmissionPair(value, submission);
-                    np.setNormalizedMode(true);
-                    normalizedPairs.add(np);
+                    if(!value.getSource().equals(instructorFile) && !submission.getSource().equals(instructorFile)) {
+                        SubmissionPair np = new SubmissionPair(value, submission);
+                        np.setNormalizedMode(true);
+                        normalizedPairs.add(np);
+                    }
 
                     pairSet.add(key);
                 }
@@ -82,7 +87,7 @@ public class Plagiarism{
         try{
             Code c = new Code(new File("file/test.c"));
             System.out.println(c);
-        //    Utils.println(new Plagiarism(new File("file/test.c"), new File("file")));
+         //   Utils.println(new Plagiarism(new File("file/test.c"), new File("file")));
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -153,11 +158,14 @@ class Submission {
     public Submission(File f, int[] basefreqs) {
         source = f;
         try(FileReader fr = new FileReader(f)){
-            Code c = new Code(fr);
 
-            recursiveWalk(c.declarationList, freqs);
+            new ParseTreeWalker().walk(new CBaseListener(){
+                @Override
+                public void enterEveryRule(ParserRuleContext ctx) {
+                    freqs[ctx.getRuleIndex()]++;
+                }
+            }, Code.getParser(fr).translationUnit());
 
-            Utils.println(Arrays.toString(freqs));
             if(basefreqs != null){
                 normalizedfreqs = new int[freqs.length];
                 for(int i = 0; i < freqs.length; ++i){
@@ -197,31 +205,4 @@ class Submission {
         return source.getName();
     }
 
-    private static void recursiveWalk(Object o, int[] freqs){
-        if(o != null){
-            if(o instanceof Impl.AbstractCObject){
-                Impl.AbstractCObject c = (Impl.AbstractCObject) o;
-                freqs[clazzIndexes.get(c.getClass())]++;
-                recursiveWalk(c.getChildren(), freqs);
-            }else if(o instanceof List){
-                for(Object child : ((List) o)){
-                    recursiveWalk(child, freqs);
-                }
-            }
-        }
-    }
-
-
-    private static final HashMap<Class, Integer> clazzIndexes = new HashMap<>();
-
-    private static void recursiveAddClasses(Class c){
-        for(Class clazz : c.getClasses()){
-            clazzIndexes.put(clazz, clazzIndexes.size());
-            recursiveAddClasses(clazz);
-        }
-    }
-
-    static{
-        recursiveAddClasses(Impl.class);
-    }
 }
