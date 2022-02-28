@@ -1,15 +1,15 @@
 package com.hypersphere.IDE.Code;
 
-import com.hypersphere.IDE.CNTRL.IDE;
-import com.hypersphere.IDE.IDEObj;
-import com.hypersphere.IDE.UI.IDEFrame;
+import com.hypersphere.GUI.GUIChild;
+import com.hypersphere.IDE.CNTRL.IDEPanel;
 import com.hypersphere.Utils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.List;
 
-public class Code implements IDEObj {
+public class Code implements GUIChild<IDEPanel> {
 
     private final List<CodeManager> managers = Utils.SyncList();
     private final Object wrloc = new Object();
@@ -35,11 +35,8 @@ public class Code implements IDEObj {
     public void saveAsPrompt() {
         try {
             synchronized (wrloc) {
-                FileDialog dialog = new FileDialog(new IDEFrame("File Explorer"), "Save", FileDialog.SAVE);
-                dialog.setVisible(true);
-                String dir = dialog.getDirectory();
-                if (dir != null) {
-                    String userProjectSavePath = dir + dialog.getFile();
+                String userProjectSavePath;
+                if((userProjectSavePath = Utils.RequestFile(true, FileDialog.SAVE)) != null){
                     sourceFile = new File(userProjectSavePath);
                     if (!sourceFile.exists())
                         sourceFile.createNewFile();
@@ -99,13 +96,13 @@ public class Code implements IDEObj {
     }
 
     @Override
-    public void init(IDE ide) {
+    public void init(JFrame frame, IDEPanel ide) {
         managers.add(ide.getManager());
         ide.getManager().addCode(this);
     }
 
     @Override
-    public void destroy(IDE ide) {
+    public void destroy(JFrame frame, IDEPanel ide) {
         ide.getManager().closeCode(this);
     }
 }

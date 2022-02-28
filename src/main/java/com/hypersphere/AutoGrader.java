@@ -1,6 +1,6 @@
 package com.hypersphere;
 
-import com.hypersphere.Plagairism.Plagiarism;
+import com.hypersphere.Analysis.Plagairism.Plagiarism;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Scanner;

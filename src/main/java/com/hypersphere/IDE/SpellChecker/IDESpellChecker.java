@@ -1,11 +1,12 @@
 package com.hypersphere.IDE.SpellChecker;
 
 import com.hypersphere.AutoGrader;
-import com.hypersphere.IDE.CNTRL.IDE;
-import com.hypersphere.IDE.IDEObj;
+import com.hypersphere.GUI.GUIChild;
+import com.hypersphere.IDE.CNTRL.IDEPanel;
 import org.fife.com.swabunga.spell.engine.SpellDictionaryHashMap;
 import org.fife.ui.rsyntaxtextarea.spell.SpellingParser;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class IDESpellChecker implements IDEObj {
+public class IDESpellChecker implements GUIChild<IDEPanel> {
 
     public IDESpellChecker(){}
 
@@ -32,7 +33,7 @@ public class IDESpellChecker implements IDEObj {
     }
 
     @Override
-    public void init(IDE ide) {
+    public void init(JFrame frame, IDEPanel ide) {
         List<String> allowedNames = Arrays.asList("color", "labeled", "center", "ize", "yze", "programming");
         HashMap<String, Reader> zip = ReadResourceZip("/english_dic.zip");
 
@@ -47,7 +48,7 @@ public class IDESpellChecker implements IDEObj {
     }
 
     @Override
-    public void destroy(IDE ide) {
+    public void destroy(JFrame frame, IDEPanel ide) {
 
     }
 }

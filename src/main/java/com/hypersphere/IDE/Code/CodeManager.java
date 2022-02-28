@@ -1,12 +1,13 @@
 package com.hypersphere.IDE.Code;
 
-import com.hypersphere.IDE.CNTRL.IDE;
-import com.hypersphere.IDE.IDEObj;
+import com.hypersphere.IDE.CNTRL.IDEPanel;
+import com.hypersphere.GUI.GUIChild;
 import com.hypersphere.Utils;
 
+import javax.swing.*;
 import java.util.List;
 
-public class CodeManager implements IDEObj {
+public class CodeManager implements GUIChild<IDEPanel> {
 
     private final List<Code> codeList = Utils.SyncList();
     private final int activeIdx = 0;
@@ -14,12 +15,12 @@ public class CodeManager implements IDEObj {
     public CodeManager(){ }
 
     @Override
-    public void init(IDE ide) {
+    public void init(JFrame frame, IDEPanel ide) {
         codeList.add(new Code(null));
     }
 
     @Override
-    public void destroy(IDE ide) {
+    public void destroy(JFrame frame, IDEPanel ide) {
         codeList.forEach(Code::close);
     }
 

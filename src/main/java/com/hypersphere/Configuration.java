@@ -1,16 +1,17 @@
 package com.hypersphere;
 
-import com.hypersphere.IDE.CNTRL.IDE;
-import com.hypersphere.IDE.IDEObj;
-import com.hypersphere.IDE.Menu.View.ViewItem;
+import com.hypersphere.IDE.CNTRL.IDEPanel;
+import com.hypersphere.GUI.GUIChild;
+import com.hypersphere.IDE.Menu.ViewItem;
 
+import javax.swing.*;
 import java.io.*;
 
-public class Configuration implements IDEObj {
+public class Configuration implements GUIChild<IDEPanel> {
     private static final File config_file;
     private static ConfigurationPOJO config;
 
-    private IDE ide;
+    private IDEPanel ide;
     private ViewItem view;
 
 
@@ -24,20 +25,23 @@ public class Configuration implements IDEObj {
     }
 
     @Override
-    public void init(IDE ide) {
+    public void init(JFrame frame, IDEPanel ide) {
         this.ide = ide;
-        view = ide.getUi().getMenu().getView();
 
-        setShowDesc(isShowDesc());
-        setParamAssistance(isParamAssistance());
-        setAutoComplete(isAutoComplete());
-        setAlternateRowColors(isAlternateRowColors());
-        setScreenWidth(getScreenWidth());
-        setScreenHeight(getScreenHeight());
+        if(ide != null){
+            view = ide.getUi().getMenu().getView();
+
+            setShowDesc(isShowDesc());
+            setParamAssistance(isParamAssistance());
+            setAutoComplete(isAutoComplete());
+            setAlternateRowColors(isAlternateRowColors());
+            setScreenWidth(getScreenWidth());
+            setScreenHeight(getScreenHeight());
+        }
     }
 
     @Override
-    public void destroy(IDE ide) {
+    public void destroy(JFrame frame, IDEPanel ide) {
         save();
     }
 
@@ -97,10 +101,16 @@ public class Configuration implements IDEObj {
         config.screenHeight = screenHeight;
     }
 
+    public void setProjectPath(String projectPath){
+        config.projectPath = projectPath;
+    }
 
+    public String getProjectPath(){
+        return config.projectPath == null ? "" : config.projectPath;
+    }
 
     static{
-        config_file = Utils.mk(new File(IDE.IDE_Dir, "config.json"), false);
+        config_file = Utils.mk(new File(IDEPanel.IDE_Dir, "config.json"), false);
         Utils.println("Loading Configurations from \"" + config_file + "\"");
         try(Reader r = new FileReader(config_file)){
             config = Utils.fromJson(r, ConfigurationPOJO.class);
@@ -108,4 +118,16 @@ public class Configuration implements IDEObj {
             e.printStackTrace();
         }
     }
+}class ConfigurationPOJO {
+
+    public boolean showDesc = true;
+    public boolean paramAssistance = true;
+    public boolean alternateRowColors = true;
+    public boolean autoComplete = true;
+
+    public int screenWidth = 500;
+    public int screenHeight = 500;
+    public String projectPath = "";
+
+    public ConfigurationPOJO() {}
 }

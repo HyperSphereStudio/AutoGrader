@@ -4,5 +4,6 @@
   "alternateRowColors" : true,
   "autoComplete" : true,
   "screenWidth" : 500,
-  "screenHeight" : 500
+  "screenHeight" : 500,
+  "projectPath" : "gradle-wrapper.properties"
 }

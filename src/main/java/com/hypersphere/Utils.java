@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import com.hypersphere.GUI.GUIFrame;
 import com.hypersphere.Parse.CParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 
@@ -165,4 +166,35 @@ public class Utils {
         }
         return null;
     }
+
+
+    public static String RequestFile(boolean createDir, int Mode){
+        String s;
+
+        switch(Mode){
+            case FileDialog.SAVE:
+                s = "Save";
+                break;
+            case FileDialog.LOAD:
+                s = "Load";
+                break;
+            default:
+                throw new Error("Cannot Open File!");
+        }
+
+        GUIFrame frame = new GUIFrame("File Explorer", null);
+        FileDialog dialog = new FileDialog(frame, s, Mode);
+        dialog.setVisible(true);
+        frame.dispose();
+        if(dialog.getDirectory() != null){
+            File dir = new File(dialog.getDirectory());
+            if(!dir.exists() && createDir){
+                new File(dialog.getDirectory()).mkdirs();
+            }
+            return dialog.getFile();
+        }
+        return null;
+    }
+
+
 }

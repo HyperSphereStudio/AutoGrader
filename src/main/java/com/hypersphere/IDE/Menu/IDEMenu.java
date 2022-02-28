@@ -1,20 +1,13 @@
 package com.hypersphere.IDE.Menu;
 
-import com.hypersphere.IDE.CNTRL.IDE;
-import com.hypersphere.IDE.IDEObj;
-import com.hypersphere.IDE.Menu.About.AboutItem;
-import com.hypersphere.IDE.Menu.Compile.CompileItem;
-import com.hypersphere.IDE.Menu.File.FileItem;
-import com.hypersphere.IDE.Menu.Look.LookAndFeelItem;
-import com.hypersphere.IDE.Menu.Search.SearchItem;
-import com.hypersphere.IDE.Menu.Settings.SettingsItem;
-import com.hypersphere.IDE.Menu.View.ViewItem;
+import com.hypersphere.IDE.CNTRL.IDEPanel;
+import com.hypersphere.GUI.GUIChild;
 
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class IDEMenu implements IDEObj {
+public class IDEMenu implements GUIChild<IDEPanel> {
 
     private final List<AbstractIDEMenu> items;
 
@@ -46,13 +39,13 @@ public class IDEMenu implements IDEObj {
     }
 
     @Override
-    public void init(IDE ide) {
-        ide.setJMenuBar(mb);
-        items.forEach(menu -> menu.init(ide));
+    public void init(JFrame frame, IDEPanel ide) {
+        frame.setJMenuBar(mb);
+        items.forEach(menu -> menu.init(frame, ide));
     }
 
     @Override
-    public void destroy(IDE ide) {
-        items.forEach(menu -> menu.destroy(ide));
+    public void destroy(JFrame frame, IDEPanel ide) {
+        items.forEach(menu -> menu.destroy(frame, ide));
     }
 }

@@ -1,12 +1,12 @@
 package com.hypersphere.IDE.Menu;
 
-import com.hypersphere.IDE.CNTRL.IDE;
-import com.hypersphere.IDE.IDEObj;
+import com.hypersphere.IDE.CNTRL.IDEPanel;
+import com.hypersphere.GUI.GUIChild;
 
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class AbstractIDEMenu implements IDEObj {
+public abstract class AbstractIDEMenu implements GUIChild<IDEPanel> {
     protected final JMenu menu;
 
     public AbstractIDEMenu(String name){
@@ -14,10 +14,10 @@ public abstract class AbstractIDEMenu implements IDEObj {
     }
 
     @Override
-    public void destroy(IDE ide){ }
+    public void destroy(JFrame frame, IDEPanel ide){ }
 
     @Override
-    public void init(IDE ide){
+    public void init(JFrame frame, IDEPanel ide){
         ide.getUi().getMenu().getMenuBar().add(menu);
     }
 

@@ -1,13 +1,13 @@
 package com.hypersphere.IDE.UI;
 
-import com.hypersphere.IDE.CNTRL.IDE;
-import com.hypersphere.IDE.IDEObj;
+import com.hypersphere.IDE.CNTRL.IDEPanel;
+import com.hypersphere.GUI.GUIChild;
 import org.fife.rsta.ui.SizeGripIcon;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class StatusBar extends JPanel implements IDEObj {
+public class StatusBar extends JPanel implements GUIChild<IDEPanel> {
 
     private final JLabel label;
 
@@ -20,15 +20,15 @@ public class StatusBar extends JPanel implements IDEObj {
     }
 
     @Override
-    public void init(IDE ide) {
+    public void init(JFrame frame, IDEPanel ide) {
         setLayout(new BorderLayout());
         add(label, BorderLayout.LINE_START);
         add(new JLabel(new SizeGripIcon()), BorderLayout.LINE_END);
-        ide.getContentPane().add(this, BorderLayout.SOUTH);
+        frame.getContentPane().add(this, BorderLayout.SOUTH);
     }
 
     @Override
-    public void destroy(IDE ide) {
+    public void destroy(JFrame frame, IDEPanel ide) {
 
     }
 }
