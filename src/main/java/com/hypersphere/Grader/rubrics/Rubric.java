@@ -1,26 +1,28 @@
-package com.hypersphere.Grader;
+package com.hypersphere.Grader.rubrics;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rubric {
+public class Rubric implements Cloneable{
 
-    private int grade;
+    private double grade;
     private String name;
     private File source;
-    private final List<Integer> selectedFeedback = new ArrayList<>();
+    private final List<RubricRule> rules = new ArrayList<>();
 
-    public int getGrade() {
+    public double getGrade() {
         return grade;
     }
 
-    public void setGrade(int current_grade) {
+    public void setGrade(double current_grade) {
         this.grade = current_grade;
     }
 
-    public List<Integer> getSelectedFeedback() {
-        return selectedFeedback;
+
+
+    public List<RubricRule> getRules(){
+        return rules;
     }
 
     public String getName() {

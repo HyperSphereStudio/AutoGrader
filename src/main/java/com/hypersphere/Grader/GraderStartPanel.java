@@ -1,17 +1,20 @@
 package com.hypersphere.Grader;
 
+import com.hypersphere.Config.ConfigurationManager;
 import com.hypersphere.GUI.GUIPanel;
 import com.hypersphere.Utils;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GraderPanel extends GUIPanel<GraderPanel> {
+public class GraderStartPanel extends GUIPanel<GraderStartPanel> {
 
     private final JButton importButton, newProjectButton, openProjectButton;
+    private final ConfigurationManager manager;
     private JFrame frame;
 
-    public GraderPanel() {
+    public GraderStartPanel(ConfigurationManager manager) {
+        this.manager = manager;
         importButton = new JButton("Import");
         newProjectButton = new JButton("New Project");
         openProjectButton = new JButton("Open");
@@ -24,15 +27,21 @@ public class GraderPanel extends GUIPanel<GraderPanel> {
     }
 
     @Override
-    public void init(JFrame frame, GraderPanel panel) {
+    public void init(JFrame frame, GraderStartPanel panel) {
         super.init(frame, panel);
         this.frame = frame;
+    }
+
+    @Override
+    public void destroy(JFrame frame, GraderStartPanel panel) {
+        super.destroy(frame, panel);
     }
 
     public void OpenProject(){
         String dir;
         if((dir = Utils.RequestFile(true, FileDialog.LOAD)) != null){
-            new GradingFrame(dir);
+            manager.getDefaultConfig().setProjectPath(dir);
+            new GradingFrame(manager);
             frame.dispose();
         }
     }

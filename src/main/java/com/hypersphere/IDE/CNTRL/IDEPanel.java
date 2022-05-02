@@ -2,7 +2,7 @@ package com.hypersphere.IDE.CNTRL;
 
 import com.hypersphere.GUI.GUIPanel;
 import com.hypersphere.IDE.Code.CodeManager;
-import com.hypersphere.Configuration;
+import com.hypersphere.Config.ConfigurationManager;
 import com.hypersphere.IDE.SpellChecker.IDESpellChecker;
 import com.hypersphere.IDE.UI.IDEUI;
 import com.hypersphere.Utils;
@@ -16,15 +16,14 @@ import java.util.List;
 
 public class IDEPanel extends GUIPanel<IDEPanel> {
 
-    public static final File IDE_Dir = Utils.mk(new File(".hypersphere"), true);
     public static final List<IDEPanel> ides = Utils.SyncList();
     private final IDEUI ui;
     private final IDESpellChecker checker;
     private final CodeManager manager;
-    private final Configuration config;
+    private final IDEConfiguration config;
 
-    public IDEPanel(){
-        config = new Configuration();
+    public IDEPanel(ConfigurationManager config){
+        this.config = new IDEConfiguration(config, this);
         manager = new CodeManager();
         ui = new IDEUI();
         checker = new IDESpellChecker();
@@ -68,7 +67,7 @@ public class IDEPanel extends GUIPanel<IDEPanel> {
         return manager;
     }
 
-    public Configuration getConfig() {
+    public IDEConfiguration getConfig() {
         return config;
     }
 

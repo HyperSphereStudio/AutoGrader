@@ -1,12 +1,14 @@
 com.hypersphere/Parse/CLexer.java
  com.hypersphere.Parse.CLexer
-com/hypersphere/Analysis/Static/Code.java
- com.hypersphere.Analysis.Static.AbstractCodeObject
- com.hypersphere.Analysis.Static.Code
-com/hypersphere/IDE/Menu/IDEAction.java
- com.hypersphere.IDE.Menu.IDEAction
-com.hypersphere/Parse/CListener.java
- com.hypersphere.Parse.CListener
+com/hypersphere/Analysis/Plagairism/SubmissionPair.java
+ com.hypersphere.Analysis.Plagairism.SubmissionPair
+com/hypersphere/Config/DefaultConfiguration.java
+ com.hypersphere.Config.DefaultConfiguration
+com/hypersphere/GUI/GUIFrame.java
+ com.hypersphere.GUI.GUIFrame
+ com.hypersphere.GUI.GUIFrame$1
+com/hypersphere/Grader/GraderStartFrame.java
+ com.hypersphere.Grader.GraderStartFrame
 com.hypersphere/Parse/CParser.java
  com.hypersphere.Parse.CParser
  com.hypersphere.Parse.CParser$AbstractDeclaratorContext
@@ -96,68 +98,43 @@ com.hypersphere/Parse/CParser.java
  com.hypersphere.Parse.CParser$TypedefNameContext
  com.hypersphere.Parse.CParser$UnaryExpressionContext
  com.hypersphere.Parse.CParser$UnaryOperatorContext
-com.hypersphere/Parse/CBaseVisitor.java
- com.hypersphere.Parse.CBaseVisitor
-com.hypersphere/Parse/CBaseListener.java
- com.hypersphere.Parse.CBaseListener
-com/hypersphere/GUI/GUIPanel.java
- com.hypersphere.GUI.GUIPanel
-com/hypersphere/Grader/GraderPanel.java
- com.hypersphere.Grader.GraderPanel
-com/hypersphere/IDE/Menu/AbstractIDEAction.java
- com.hypersphere.IDE.Menu.AbstractIDEAction
-com/hypersphere/GUI/GUIChild.java
- com.hypersphere.GUI.GUIChild
+com/hypersphere/IDE/SpellChecker/IDESpellChecker.java
+ com.hypersphere.IDE.SpellChecker.IDESpellChecker
+com/hypersphere/IDE/Menu/SearchItem.java
+ com.hypersphere.IDE.Menu.SearchItem
+ com.hypersphere.IDE.Menu.SearchItem$1
+ com.hypersphere.IDE.Menu.SearchItem$GoToLineAction
+ com.hypersphere.IDE.Menu.SearchItem$ShowFindDialogAction
+ com.hypersphere.IDE.Menu.SearchItem$ShowReplaceDialogAction
 com/hypersphere/AutoGrader.java
  com.hypersphere.AutoGrader
-com/hypersphere/Utils.java
- com.hypersphere.Utils
-com/hypersphere/Analysis/Static/IntVector.java
- com.hypersphere.Analysis.Static.IntVector
- com.hypersphere.Analysis.Static.IntVector$DFunction
 com/hypersphere/Analysis/Plagairism/Plagiarism.java
  com.hypersphere.Analysis.Plagairism.Plagiarism
- com.hypersphere.Analysis.Plagairism.Submission
- com.hypersphere.Analysis.Plagairism.Submission$1
- com.hypersphere.Analysis.Plagairism.SubmissionPair
-com/hypersphere/Analysis/Static/CImplVisitor.java
- com.hypersphere.Analysis.Static.AbstractCVisitor
- com.hypersphere.Analysis.Static.CImplVisitor
- com.hypersphere.Analysis.Static.CImplVisitor$1
- com.hypersphere.Analysis.Static.CImplVisitor$BlockVisitor
- com.hypersphere.Analysis.Static.CImplVisitor$BoolFunction
- com.hypersphere.Analysis.Static.CImplVisitor$DeclarationVisitor
- com.hypersphere.Analysis.Static.CImplVisitor$ExpressionVisitor
- com.hypersphere.Analysis.Static.CImplVisitor$TypeVisitor
 com.hypersphere/Parse/CVisitor.java
  com.hypersphere.Parse.CVisitor
-com/hypersphere/Grader/GraderFrame.java
- com.hypersphere.Grader.GraderFrame
-com/hypersphere/GUI/GUIFrame.java
- com.hypersphere.GUI.GUIFrame
- com.hypersphere.GUI.GUIFrame$1
-com/hypersphere/IDE/Menu/FileItem.java
- com.hypersphere.IDE.Menu.FileItem
- com.hypersphere.IDE.Menu.FileItem$1
- com.hypersphere.IDE.Menu.FileItem$2
-com/hypersphere/IDE/CNTRL/IDEFrame.java
- com.hypersphere.IDE.CNTRL.IDEFrame
-com/hypersphere/IDE/Menu/SettingsItem.java
- com.hypersphere.IDE.Menu.SettingsItem
-com/hypersphere/IDE/CNTRL/IDEPanel.java
- com.hypersphere.IDE.CNTRL.IDEPanel
+com/hypersphere/IDE/Menu/AbstractIDEMenu.java
+ com.hypersphere.IDE.Menu.AbstractIDEMenu
+com/hypersphere/IDE/UI/StatusBar.java
+ com.hypersphere.IDE.UI.StatusBar
+com/hypersphere/IDE/Menu/CompileItem.java
+ com.hypersphere.IDE.Menu.CompileItem
+ com.hypersphere.IDE.Menu.CompileItem$Compile
+ com.hypersphere.IDE.Menu.CompileItem$CompileAndRun
+com/hypersphere/IDE/Code/CodeManager.java
+ com.hypersphere.IDE.Code.CodeManager
 com/hypersphere/IDE/UI/IDEUI.java
  com.hypersphere.IDE.UI.IDEUI
+com/hypersphere/Grader/rubrics/RubricRule.java
+ com.hypersphere.Grader.rubrics.RubricRule
 com/hypersphere/IDE/UI/IDETextArea.java
  com.hypersphere.IDE.UI.IDETextArea
  com.hypersphere.IDE.UI.IDETextArea$1
  com.hypersphere.IDE.UI.IDETextArea$2
-com/hypersphere/IDE/Menu/AbstractIDEMenu.java
- com.hypersphere.IDE.Menu.AbstractIDEMenu
-com/hypersphere/IDE/Menu/AboutItem.java
- com.hypersphere.IDE.Menu.AboutItem
- com.hypersphere.IDE.Menu.AboutItem$1
- com.hypersphere.IDE.Menu.AboutItem$2
+com/hypersphere/Utils.java
+ com.hypersphere.Utils
+com/hypersphere/Analysis/Static/Code.java
+ com.hypersphere.Analysis.Static.AbstractCodeObject
+ com.hypersphere.Analysis.Static.Code
 com/hypersphere/IDE/Menu/ViewItem.java
  com.hypersphere.IDE.Menu.ViewItem
  com.hypersphere.IDE.Menu.ViewItem$1
@@ -168,22 +145,66 @@ com/hypersphere/IDE/Menu/ViewItem.java
 com/hypersphere/IDE/Menu/LookAndFeelItem.java
  com.hypersphere.IDE.Menu.LookAndFeelItem
  com.hypersphere.IDE.Menu.LookAndFeelItem$Look
+com/hypersphere/Grader/GradingPanel.java
+ com.hypersphere.Grader.GradingPanel
+com/hypersphere/Grader/rubrics/RubricPanel.java
+ com.hypersphere.Grader.rubrics.RubricPanel
+ com.hypersphere.Grader.rubrics.RubricPanel$1
+ com.hypersphere.Grader.rubrics.RubricPanel$SelectionPanel
+com/hypersphere/IDE/Menu/AbstractIDEAction.java
+ com.hypersphere.IDE.Menu.AbstractIDEAction
+com/hypersphere/Grader/rubrics/Rubric.java
+ com.hypersphere.Grader.rubrics.Rubric
+com/hypersphere/IDE/Menu/FileItem.java
+ com.hypersphere.IDE.Menu.FileItem
+ com.hypersphere.IDE.Menu.FileItem$1
+ com.hypersphere.IDE.Menu.FileItem$2
+com/hypersphere/IDE/Menu/SettingsItem.java
+ com.hypersphere.IDE.Menu.SettingsItem
+com/hypersphere/IDE/Menu/IDEAction.java
+ com.hypersphere.IDE.Menu.IDEAction
 com/hypersphere/IDE/Menu/IDEMenu.java
  com.hypersphere.IDE.Menu.IDEMenu
-com/hypersphere/IDE/UI/StatusBar.java
- com.hypersphere.IDE.UI.StatusBar
-com/hypersphere/IDE/SpellChecker/IDESpellChecker.java
- com.hypersphere.IDE.SpellChecker.IDESpellChecker
-com/hypersphere/IDE/Menu/SearchItem.java
- com.hypersphere.IDE.Menu.SearchItem
- com.hypersphere.IDE.Menu.SearchItem$1
- com.hypersphere.IDE.Menu.SearchItem$GoToLineAction
- com.hypersphere.IDE.Menu.SearchItem$ShowFindDialogAction
- com.hypersphere.IDE.Menu.SearchItem$ShowReplaceDialogAction
-com/hypersphere/IDE/Menu/CompileItem.java
- com.hypersphere.IDE.Menu.CompileItem
- com.hypersphere.IDE.Menu.CompileItem$Compile
- com.hypersphere.IDE.Menu.CompileItem$CompileAndRun
+com/hypersphere/GUI/GUIPanel.java
+ com.hypersphere.GUI.GUIPanel
+com/hypersphere/Config/ConfigurationManager.java
+ com.hypersphere.Config.ConfigurationManager
+com/hypersphere/GUI/GUIChild.java
+ com.hypersphere.GUI.GUIChild
+com/hypersphere/Analysis/Static/IntVector.java
+ com.hypersphere.Analysis.Static.IntVector
+ com.hypersphere.Analysis.Static.IntVector$DFunction
+com/hypersphere/IDE/CNTRL/IDEConfiguration.java
+ com.hypersphere.IDE.CNTRL.IDEConfiguration
+com/hypersphere/Analysis/Static/CImplVisitor.java
+ com.hypersphere.Analysis.Static.AbstractCVisitor
+ com.hypersphere.Analysis.Static.CImplVisitor
+ com.hypersphere.Analysis.Static.CImplVisitor$1
+ com.hypersphere.Analysis.Static.CImplVisitor$BlockVisitor
+ com.hypersphere.Analysis.Static.CImplVisitor$BoolFunction
+ com.hypersphere.Analysis.Static.CImplVisitor$DeclarationVisitor
+ com.hypersphere.Analysis.Static.CImplVisitor$ExpressionVisitor
+ com.hypersphere.Analysis.Static.CImplVisitor$TypeVisitor
+com/hypersphere/IDE/CNTRL/IDEPanel.java
+ com.hypersphere.IDE.CNTRL.IDEPanel
+com/hypersphere/Grader/GraderStartPanel.java
+ com.hypersphere.Grader.GraderStartPanel
+com/hypersphere/IDE/Menu/AboutItem.java
+ com.hypersphere.IDE.Menu.AboutItem
+ com.hypersphere.IDE.Menu.AboutItem$1
+ com.hypersphere.IDE.Menu.AboutItem$2
+com.hypersphere/Parse/CBaseVisitor.java
+ com.hypersphere.Parse.CBaseVisitor
+com.hypersphere/Parse/CBaseListener.java
+ com.hypersphere.Parse.CBaseListener
+com/hypersphere/Config/Configuration.java
+ com.hypersphere.Config.Configuration
+com/hypersphere/Grader/GraderConfiguration.java
+ com.hypersphere.Grader.GraderConfiguration
+com/hypersphere/IDE/CNTRL/IDEFrame.java
+ com.hypersphere.IDE.CNTRL.IDEFrame
+com/hypersphere/Grader/Grader.java
+ com.hypersphere.Grader.Grader
 com/hypersphere/Analysis/Static/Impl.java
  com.hypersphere.Analysis.Static.Impl
  com.hypersphere.Analysis.Static.Impl$AbstractCObject
@@ -208,22 +229,17 @@ com/hypersphere/Analysis/Static/Impl.java
  com.hypersphere.Analysis.Static.Impl$Value$CString
  com.hypersphere.Analysis.Static.Impl$Value$Float
  com.hypersphere.Analysis.Static.Impl$Value$Int
-com/hypersphere/IDE/Code/CodeManager.java
- com.hypersphere.IDE.Code.CodeManager
-com/hypersphere/IDE/Code/Code.java
- com.hypersphere.IDE.Code.Code
-com/hypersphere/Configuration.java
- com.hypersphere.Configuration
- com.hypersphere.ConfigurationPOJO
 com/hypersphere/Grader/GradingFrame.java
  com.hypersphere.Grader.GradingFrame
-com/hypersphere/Grader/Rubric.java
- com.hypersphere.Grader.Rubric
-com/hypersphere/Grader/RubricPanel.java
- com.hypersphere.Grader.RubricPanel
- com.hypersphere.Grader.RubricPanel$1
- com.hypersphere.Grader.RubricPanel$SelectionPanel
-com/hypersphere/Grader/GradingPanel.java
- com.hypersphere.Grader.GradingPanel
-com/hypersphere/Grader/Grader.java
- com.hypersphere.Grader.Grader
+com/hypersphere/IDE/Code/Code.java
+ com.hypersphere.IDE.Code.Code
+com/hypersphere/Analysis/Plagairism/Submission.java
+ com.hypersphere.Analysis.Plagairism.Submission
+ com.hypersphere.Analysis.Plagairism.Submission$1
+com.hypersphere/Parse/CListener.java
+ com.hypersphere.Parse.CListener
+com/hypersphere/Analysis/Plagairism/PlagerismCMD.java
+ com.hypersphere.Analysis.Plagairism.PlagerismCMD
+ com.hypersphere.Analysis.Plagairism.PlagerismCMD$Similarity
+com/hypersphere/AutoGraderControl.java
+ com.hypersphere.AutoGraderControl

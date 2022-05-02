@@ -1,9 +1,5 @@
 {
-  "showDesc" : true,
-  "paramAssistance" : true,
-  "alternateRowColors" : true,
-  "autoComplete" : true,
-  "screenWidth" : 500,
-  "screenHeight" : 500,
-  "projectPath" : "gradle-wrapper.properties"
+  "IDE_SCREEN_WIDTH" : 350,
+  "IDE_SCREEN_HEIGHT" : 640,
+  "PROJECT_PATH" : "gradle-wrapper.properties"
 }

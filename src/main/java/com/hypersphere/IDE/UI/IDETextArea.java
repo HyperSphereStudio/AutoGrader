@@ -82,6 +82,9 @@ public class IDETextArea extends RSyntaxTextArea implements GUIChild<IDEPanel> {
                  System.out.println("\tResized Text Area [" + lastRows + "Rows, " + lastCols + "Cols] ["
                             + getRows() + "Rows, " + getColumns() + "Cols]");
                  validate();
+
+                 ide.getConfig().setWidth(getWidth(), false);
+                 ide.getConfig().setHeight(getHeight(), false);
             }
         });
 

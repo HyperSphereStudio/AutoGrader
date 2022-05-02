@@ -1,7 +1,8 @@
 package com.hypersphere.Grader;
 
-import com.hypersphere.Configuration;
+import com.hypersphere.Config.ConfigurationManager;
 import com.hypersphere.GUI.GUIPanel;
+import com.hypersphere.Grader.rubrics.RubricPanel;
 import com.hypersphere.IDE.CNTRL.IDEPanel;
 
 import javax.swing.*;
@@ -11,15 +12,15 @@ import java.util.ArrayList;
 public class GradingPanel extends GUIPanel<GradingPanel> {
     private final IDEPanel idePanel;
     private final Grader grader;
-    private final Configuration configuration;
-    private final String projectPath;
+    private final GraderConfiguration config;
 
-    public GradingPanel(String projectPath){
-        this.projectPath = projectPath;
-        grader = new Grader(new ArrayList<>());
-        configuration = new Configuration();
-        idePanel = new IDEPanel();
-        configuration.setProjectPath(projectPath);
+    public GradingPanel(ConfigurationManager configurationManager){
+        this.config = new GraderConfiguration(configurationManager);
+
+
+
+        grader = new Grader(new ArrayList<>(), new ArrayList<>(), 0);
+        idePanel = new IDEPanel(configurationManager);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class GradingPanel extends GUIPanel<GradingPanel> {
         setLayout(new GridLayout(1, 2));
 
         getRubricPanel().init(frame, this);
-        configuration.init(frame, null);
+        config.init(frame, null);
         idePanel.init(frame, idePanel);
 
         add(idePanel);
@@ -44,16 +45,12 @@ public class GradingPanel extends GUIPanel<GradingPanel> {
     public void destroy(JFrame frame, GradingPanel panel) {
         super.destroy(frame, panel);
         getRubricPanel().destroy(frame, this);
-        configuration.destroy(frame, null);
+        config.destroy(frame, null);
         idePanel.destroy(frame, idePanel);
     }
 
-    public String getProjectPath(){
-        return projectPath;
-    }
-
-    public Configuration getConfiguration() {
-        return configuration;
+    public GraderConfiguration getConfiguration() {
+        return config;
     }
 
     public RubricPanel getRubricPanel() {

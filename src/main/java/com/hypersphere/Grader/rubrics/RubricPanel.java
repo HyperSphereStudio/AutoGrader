@@ -1,6 +1,9 @@
-package com.hypersphere.Grader;
+package com.hypersphere.Grader.rubrics;
 
 import com.hypersphere.GUI.GUIPanel;
+import com.hypersphere.Grader.Grader;
+import com.hypersphere.Grader.GraderStartFrame;
+import com.hypersphere.Grader.GradingPanel;
 
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
@@ -110,45 +113,60 @@ public class RubricPanel extends GUIPanel<GradingPanel> {
 
     public class SelectionPanel extends GUIPanel {
 
-        private final JButton leftButton;
-        private final JButton searchButton;
-        private final JButton rightButton;
+        private JFrame frame;
+        private final JButton leftButton, searchButton, rightButton, saveButton, openButton;
         private final JTextArea statsLabel;
 
         public SelectionPanel() {
             leftButton = new JButton("Left");
             searchButton = new JButton("Search");
             rightButton = new JButton("Right");
+            saveButton = new JButton("Save");
+            openButton = new JButton("Open");
             statsLabel = new JTextArea();
         }
 
-        public void leftButton(ActionEvent e){
+        public void left(ActionEvent e){
             if(grader.getCurrentRubricIndex() >= 1){
                 grader.setRubric(grader.getCurrentRubricIndex() - 1);
             }
         }
 
-        public void selectionButton(ActionEvent e){
+        public void selection(ActionEvent e){
 
         }
 
-        public void rightButton(ActionEvent e){
+        public void right(ActionEvent e){
             if(grader.getCurrentRubricIndex() < grader.getRubrics().size()){
                 grader.setRubric(grader.getCurrentRubricIndex() + 1);
             }
+        }
+
+        public void open(ActionEvent e){
+            save(null);
+            frame.dispose();
+            new GraderStartFrame();
+        }
+
+        public void save(ActionEvent e){
+            grader.save();
         }
 
         @Override
         public void init(JFrame frame, GUIPanel panel) {
             super.init(frame, panel);
 
+            this.frame = frame;
+
             statsLabel.setEditable(false);
             statsLabel.setHighlighter(null);
             statsLabel.setOpaque(false);
 
-            leftButton.addActionListener(this::leftButton);
-            searchButton.addActionListener(this::selectionButton);
-            rightButton.addActionListener(this::rightButton);
+            leftButton.addActionListener(this::left);
+            searchButton.addActionListener(this::selection);
+            rightButton.addActionListener(this::right);
+            openButton.addActionListener(this::open);
+            saveButton.addActionListener(this::save);
 
             setLayout(new GridBagLayout());
 
@@ -157,19 +175,33 @@ public class RubricPanel extends GUIPanel<GradingPanel> {
 
             cons.gridx = 0;
             cons.gridy = 0;
+            cons.weightx = 3;
             add(statsLabel, cons);
 
             cons.gridx = 0;
             cons.gridy = 1;
+            cons.weightx = 1;
             add(leftButton, cons);
 
             cons.gridx = 1;
             cons.gridy = 1;
+            cons.weightx = 1;
             add(searchButton, cons);
 
             cons.gridx = 2;
             cons.gridy = 1;
+            cons.weightx = 1;
             add(rightButton, cons);
+
+            cons.gridx = 0;
+            cons.gridy = 2;
+            cons.weightx = 1;
+            add(openButton, cons);
+
+            cons.gridx = 1;
+            cons.gridy = 2;
+            cons.weightx = 1;
+            add(saveButton, cons);
 
             grader.setRubric(-1);
         }
@@ -177,7 +209,6 @@ public class RubricPanel extends GUIPanel<GradingPanel> {
         @Override
         public void destroy(JFrame frame, GUIPanel panel) {
             super.destroy(frame, panel);
-
         }
 
         public JButton getLeftButton() {

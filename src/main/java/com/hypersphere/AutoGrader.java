@@ -5,8 +5,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.Scanner;
 
-public class AutoGrader {
 
+public class AutoGrader{
     private static final File root = new File("");
 
     private static File cfile, graded_notes;
@@ -28,23 +28,16 @@ public class AutoGrader {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        if(true){
-         //
-            //   new IDE().init();
-            Plagiarism.Test();
-            return;
-        }
-
-        ExecName = args[0];
-        cfile = new File(args[1]);
-        graded_notes = new File(args[2]);
-        cfiles = cfile.listFiles();
+            ExecName = args[0];
+            cfile = new File(args[1]);
+            graded_notes = new File(args[2]);
+            cfiles = cfile.listFiles();
 
 
-        raf = new RandomAccessFile(new File("main.c"), "rw");
-        String mainStr = Files.readAllLines(new File("main.c").toPath()).get(0).substring(10);
-        exec(contains(cfiles, mainStr.substring(0, mainStr.length() - 1)));
-        raf.close();
+            raf = new RandomAccessFile(new File("main.c"), "rw");
+            String mainStr = Files.readAllLines(new File("main.c").toPath()).get(0).substring(10);
+            exec(contains(cfiles, mainStr.substring(0, mainStr.length() - 1)));
+            raf.close();
     }
 
     private static void exec(int startFileIdx) throws IOException, InterruptedException {
@@ -83,22 +76,22 @@ public class AutoGrader {
     }
 
     private static int run(Scanner scanner, int fileIdx) throws IOException, InterruptedException {
-            String in = scanner.nextLine();
-            if(in.isEmpty())
-                return setfile(scanner,fileIdx + 1);
-            switch (in) {
-                case "1":
-                    print("Enter Idx:");
-                    return setfile(scanner, Integer.parseInt(scanner.nextLine()));
-                case "2":
-                    print("Enter Delta:");
-                    return setfile(scanner, fileIdx + Integer.parseInt(scanner.nextLine()));
-                case "3":
-                    return setfile(scanner, fileIdx);
-                default:
-                    print("Unknown Symbol:" + in);
-                    return fileIdx;
-            }
+        String in = scanner.nextLine();
+        if(in.isEmpty())
+            return setfile(scanner,fileIdx + 1);
+        switch (in) {
+            case "1":
+                print("Enter Idx:");
+                return setfile(scanner, Integer.parseInt(scanner.nextLine()));
+            case "2":
+                print("Enter Delta:");
+                return setfile(scanner, fileIdx + Integer.parseInt(scanner.nextLine()));
+            case "3":
+                return setfile(scanner, fileIdx);
+            default:
+                print("Unknown Symbol:" + in);
+                return fileIdx;
+        }
     }
 
     private static int setfile(Scanner scanner, int idx) throws IOException, InterruptedException {

@@ -188,7 +188,7 @@ public class SearchItem extends AbstractIDEMenu implements SearchListener {
     private class ShowFindDialogAction extends AbstractIDEAction {
 
         ShowFindDialogAction() {
-            super("Find...", KeyEvent.VK_H, true, false);
+            super("Find...", KeyEvent.VK_F, true, false);
         }
 
         @Override
